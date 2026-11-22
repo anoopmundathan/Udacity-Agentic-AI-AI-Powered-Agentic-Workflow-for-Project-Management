@@ -1,0 +1,174 @@
+phase_1 student$ python direct_prompt_agent.py 
+The capital of France is Paris.
+
+Knowledge source: the DirectPromptAgent sends the prompt straight to the LLM with no system prompt, so the answer comes solely from the general knowledge learned by the gpt-4o-mini model during training.
+
+phase_1 student$ python augmented_prompt_agent.py 
+Dear students, the capital of France is Paris.
+
+phase_1 student$ python knowledge_augmented_prompt_agent.py 
+Dear students, knowledge-based assistant. The capital of France is London, not Paris.
+
+The agent answered using the knowledge provided in its system prompt (the capital of France is London) rather than its inherent LLM knowledge (Paris).
+
+phase_1 student$ python evaluation_agent.py 
+
+--- Interaction 1 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+What is the capital of France?
+Worker Agent Response:
+Dear students, knowledge-based assistant. The capital of France is London, not Paris.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+No, the answer does not meet the criteria because it is a complete sentence rather than just the name of a city. The correct answer should simply be "Paris."
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+Instructions to fix the answer:
+
+1. Identify the current response provided. For example, it might read: "The capital of France is Paris."
+
+2. Remove any additional content from the answer that does not conform to the criteria. In this case, eliminate any phrases, explanations, or sentences.
+
+3. Retain only the name of the city. 
+
+4. Provide the corrected answer so that it solely reflects the expectation: "Paris."
+
+5. Review the final output to ensure it meets the requirement of being just the name of a city without any extra wording.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 2 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. The capital of France is London, not Paris.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: Instructions to fix the answer:
+
+1. Identify the current response provided. For example, it might read: "The capital of France is Paris."
+
+2. Remove any additional content from the answer that does not conform to the criteria. In this case, eliminate any phrases, explanations, or sentences.
+
+3. Retain only the name of the city. 
+
+4. Provide the corrected answer so that it solely reflects the expectation: "Paris."
+
+5. Review the final output to ensure it meets the requirement of being just the name of a city without any extra wording.
+Worker Agent Response:
+Dear students, knowledge-based assistant. London.
+ Evaluator Agent Evaluation:
+No, the answer does not meet the criteria because it is a sentence rather than just the name of a city. The inclusion of "Dear students" and "knowledge-based assistant" makes it more of a greeting or introduction rather than a standalone city name.
+ Step 3: Check if evaluation is positive
+ Step 4: Generate instructions to correct the response
+Instructions to fix:
+To fix the answer based on the provided reasons, follow these instructions:
+
+1. **Identify the City Name**: Extract only the name of the city from the original answer. Ensure that it’s clearly stated without any additional text or phrases.
+
+2. **Remove Extraneous Text**: Eliminate any introductory phrases, greetings, or non-essential information. This includes removing "Dear students," "knowledge-based assistant," or similar introductions.
+
+3. **Focus on Brevity**: Ensure the answer is concise. The response should consist solely of the city name with no additional sentences or explanations.
+
+4. **Check for Format**: Confirm that the city name is formatted correctly and clearly, with appropriate capitalization and spelling.
+
+5. **Final Review**: Review the modified answer to ensure that it strictly adheres to the criteria of being just the city name and nothing else.
+
+By following these steps, you can transform the original answer into the correct format that meets the specified criteria.
+ Step 5: Send feedback to worker agent for refinement
+
+--- Interaction 3 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+The original prompt was: What is the capital of France?
+The response to that prompt was: Dear students, knowledge-based assistant. London.
+It has been evaluated as incorrect.
+Make only these corrections, do not alter content validity: To fix the answer based on the provided reasons, follow these instructions:
+
+1. **Identify the City Name**: Extract only the name of the city from the original answer. Ensure that it’s clearly stated without any additional text or phrases.Step 2: Evaluator agent judges the response
+2. **Remove Extraneous Text**: Eliminate any introductory phrases, greetings, or non-essential information. This includes removing "Dear students," "knowledge-based assistant," or similar introductions.
+
+3. **Focus on Brevity**: Ensure the answer is concise. The response should consist solely of the city name with no additional sentences or explanations.
+
+4. **Check for Format**: Confirm that the city name is formatted correctly and clearly, with appropriate capitalization and spelling.
+
+5. **Final Review**: Review the modified answer to ensure that it strictly adheres to the criteria of being just the city name and nothing else.
+
+By following these steps, you can transform the original answer into the correct format that meets the specified criteria.
+Worker Agent Response:
+London
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+Yes, the answer meets the criteria because "London" is solely the name of a city and does not include any additional sentences or information.
+ Step 3: Check if evaluation is positive
+✅ Final solution accepted.
+
+=== Evaluation result ===
+Final response: London
+Evaluation: Yes, the answer meets the criteria because "London" is solely the name of a city and does not include any additional sentences or information.
+Iterations: 3
+phase_1 student$ python routing_agent.py 
+
+Prompt: Tell me about the history of Rome, Texas
+0.38575450269853256
+0.1649701687495782
+0.002581346240444328
+[Router] Best agent: texas agent (score=0.386)
+Response: Rome, Texas, is a small town located in the northeastern part of the state, specifically in Lamar County. The area was settled in the late 19th century, with its establishment dating back to around 1880. The town was named after Rome, Italy, reflecting a common practice of naming places in the United States after well-known cities in Europe.
+
+The town developed primarily as a farming community, benefiting from the fertile land in the region. The arrival of the railroad in the early 1900s contributed to its growth, facilitating the transport of agricultural products and connecting the town to larger markets.
+
+Over the years, Rome has maintained a small population, with its economy primarily based on agriculture and local businesses. The town has experienced the typical ups and downs of rural communities in Texas, including periods of growth and decline.
+
+Today, Rome is known for its tight-knit community and rural charm, with a focus on preserving its history while adapting to modern needs. The town is part of the larger cultural and historical tapestry of Texas, reflecting the state's diverse heritage and development.
+
+Prompt: Tell me about the history of Rome, Italy
+0.14363952088456433
+0.2880336377348315
+0.032039607819576446
+[Router] Best agent: europe agent (score=0.288)
+Response: Rome, the capital of Italy, has a rich and complex history that spans over two and a half millennia. It was founded, according to legend, in 753 BC by Romulus, who became its first king. The early history of Rome is characterized by the establishment of the Roman Kingdom, which lasted until around 509 BC when the last king, Tarquin the Proud, was overthrown, leading to the establishment of the Roman Republic.
+
+During the Republic, Rome expanded its territory through military conquests and alliances, becoming a dominant power in the Mediterranean. This period saw significant developments in Roman law, governance, and culture. The Republic faced internal strife, including class struggles between the patricians (aristocrats) and plebeians (commoners), leading to social reforms.
+
+The Republic eventually fell into a series of civil wars, culminating in the rise of Julius Caesar, who was appointed dictator for life in 44 BC. His assassination led to further conflicts, and in 27 BC, his adopted heir Octavian (later known as Augustus) became the first Roman Emperor, marking the beginning of the Roman Empire.
+
+The Empire reached its zenith in the 2nd century AD under emperors like Trajan and Hadrian, encompassing vast territories across Europe, North Africa, and the Middle East. This period is known as the Pax Romana, a time of relative peace and stability.
+
+However, the Empire faced numerous challenges, including economic troubles, military defeats, and internal corruption. By the 3rd century AD, it began to decline, leading to the eventual division of the Empire into the Western Roman Empire and the Eastern Roman Empire (Byzantine Empire) in the late 4th century AD.
+
+The Western Roman Empire fell in 476 AD when the last emperor, Romulus Augustulus, was deposed. Rome itself experienced a period of decline, marked by invasions and the loss of political power. The city became a significant center for Christianity, especially after Emperor Constantine the Great embraced the faith in the early 4th century.
+
+During the Middle Ages, Rome was influenced by various powers, including the Papacy, which became a central authority in the city. The Renaissance, beginning in the 14th century, saw a revival of art, culture, and learning, with Rome becoming a hub for artists and thinkers.
+
+In the 19th century, Rome played a crucial role in the unification of Italy. It was officially declared the capital of the Kingdom of Italy in 1871. Throughout the 20th century, Rome underwent significant changes, including the impact of World War II and the establishment of the Italian Republic in 1946.
+
+Today, Rome is known for its historical landmarks, including the Colosseum, the Roman Forum, and the Vatican City, which is an independent city-state and the spiritual center of the Roman Catholic Church. The city's rich history continues to attract millions of visitors each year.
+
+Prompt: One story takes 2 days, and there are 20 stories
+0.05930644167162193
+0.08284649075788718
+0.13007251677099022
+[Router] Best agent: math agent (score=0.130)
+Response: Total days = Number of stories × Days per story  
+Total days = 20 stories × 2 days/story = 40 days
+phase_1 student$ python action_planning_agent.py 
+Prompt: One morning I wanted to have scrambled eggs
+Extracted steps:
+1. Crack eggs into a bowl
+2. Beat eggs with a fork until mixed
+3. Heat pan with butter or oil over medium heat
+4. Pour egg mixture into pan
+5. Stir gently as eggs cook
+6. Remove from heat when eggs are just set but still moist
+7. Season with salt and pepper
+8. Serve immediately
+
+phase_1 student$ python rag_knowledge_prompt_agent.py 
+What is the podcast that Clara hosts about?
+Dear students, 
+
+Clara hosts a podcast called **"Crosscurrents,"** which explores the intersection of science, culture, and ethics. In her show, she interviews a diverse range of guests, including researchers, engineers, artists, and activists, covering topics that span from marine ecology to artificial intelligence. The podcast reflects her inspiration drawn from her parents' resourcefulness and dedication to knowledge. 
+
+Best,  
+[Your Name]
